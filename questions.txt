@@ -1,0 +1,336 @@
+{
+    "chemistry": {
+        "1. Atomic Structure": {
+            "subtopics": {
+                "1.1 Atomic Models": {
+                    "quiz": [
+                        {
+                            "question": "What is the atomic number of Carbon?",
+                            "options": ["6", "12", "14", "8"],
+                            "correct": 0
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Atom",
+                            "definition": "The smallest unit of matter that retains the properties of an element"
+                        }
+                    ],
+                    "exam": [
+                        {
+                            "question": "Explain the structure of an atom according to the Bohr model.",
+                            "markingPoints": [
+                                "Electrons in fixed orbits/energy levels",
+                                "Nucleus at center with protons and neutrons",
+                                "Each orbit has a specific energy"
+                            ]
+                        }
+                    ]
+                },
+                "1.2 Subatomic Particles": {
+                    "quiz": [
+                        {
+                            "question": "Which subatomic particle has no charge?",
+                            "options": ["Proton", "Electron", "Neutron", "Ion"],
+                            "correct": 2
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Atomic Number",
+                            "definition": "The number of protons in the nucleus of an atom"
+                        }
+                    ],
+                    "exam": []
+                }
+            },
+            "quiz": [
+                {
+                    "question": "What is the atomic number of Carbon?",
+                    "options": ["6", "12", "14", "8"],
+                    "correct": 0
+                },
+                {
+                    "question": "Which subatomic particle has no charge?",
+                    "options": ["Proton", "Electron", "Neutron", "Ion"],
+                    "correct": 2
+                }
+            ],
+            "terms": [
+                {
+                    "term": "Atom",
+                    "definition": "The smallest unit of matter that retains the properties of an element"
+                },
+                {
+                    "term": "Atomic Number",
+                    "definition": "The number of protons in the nucleus of an atom"
+                }
+            ],
+            "exam": [
+                {
+                    "question": "Explain the structure of an atom and describe the properties of its subatomic particles.",
+                    "markingPoints": [
+                        "Electrons are negatively charged and orbit the nucleus",
+                        "Nucleus contains protons (positive) and neutrons (neutral)",
+                        "Electrons occupy energy levels or shells",
+                        "The atomic number is the number of protons"
+                    ]
+                }
+            ]
+        },
+        "2. Chemical Bonding": {
+            "subtopics": {
+                "2.1 Ionic Bonding": {
+                    "quiz": [
+                        {
+                            "question": "What type of bond forms between metals and non-metals?",
+                            "options": ["Covalent", "Ionic", "Metallic", "Hydrogen"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Ionic Bond",
+                            "definition": "A chemical bond formed by the electrostatic attraction between oppositely charged ions"
+                        }
+                    ],
+                    "exam": []
+                },
+                "2.2 Covalent Bonding": {
+                    "quiz": [
+                        {
+                            "question": "What type of bond involves sharing electrons?",
+                            "options": ["Ionic", "Covalent", "Metallic", "Hydrogen"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Covalent Bond",
+                            "definition": "A chemical bond formed by sharing electrons between atoms"
+                        }
+                    ],
+                    "exam": []
+                }
+            },
+            "quiz": [
+                {
+                    "question": "What type of bond forms between metals and non-metals?",
+                    "options": ["Covalent", "Ionic", "Metallic", "Hydrogen"],
+                    "correct": 1
+                }
+            ],
+            "terms": [
+                {
+                    "term": "Ionic Bond",
+                    "definition": "A chemical bond formed by the electrostatic attraction between oppositely charged ions"
+                }
+            ],
+            "exam": []
+        }
+    },
+    "physics": {
+        "1. Forces and Motion": {
+            "subtopics": {
+                "1.1 Newton's Laws": {
+                    "quiz": [
+                        {
+                            "question": "What is Newton's first law of motion?",
+                            "options": ["F = ma", "Objects at rest stay at rest", "Action-reaction", "Conservation of momentum"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Inertia",
+                            "definition": "The tendency of an object to resist changes in its state of motion"
+                        }
+                    ],
+                    "exam": []
+                },
+                "1.2 Forces": {
+                    "quiz": [
+                        {
+                            "question": "What is the SI unit of force?",
+                            "options": ["Newton", "Joule", "Watt", "Pascal"],
+                            "correct": 0
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Force",
+                            "definition": "A push or pull that can change the motion of an object"
+                        }
+                    ],
+                    "exam": []
+                }
+            },
+            "quiz": [
+                {
+                    "question": "What is Newton's first law of motion?",
+                    "options": ["F = ma", "Objects at rest stay at rest", "Action-reaction", "Conservation of momentum"],
+                    "correct": 1
+                }
+            ],
+            "terms": [
+                {
+                    "term": "Force",
+                    "definition": "A push or pull that can change the motion of an object"
+                }
+            ],
+            "exam": []
+        },
+        "2. Energy": {
+            "subtopics": {
+                "2.1 Energy Types": {
+                    "quiz": [
+                        {
+                            "question": "What is kinetic energy?",
+                            "options": ["Stored energy", "Energy of motion", "Heat energy", "Light energy"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Kinetic Energy",
+                            "definition": "The energy an object has due to its motion"
+                        }
+                    ],
+                    "exam": []
+                },
+                "2.2 Energy Conversion": {
+                    "quiz": [
+                        {
+                            "question": "When a ball falls, what energy conversion occurs?",
+                            "options": ["Kinetic to potential", "Potential to kinetic", "Thermal to kinetic", "Chemical to kinetic"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Conservation of Energy",
+                            "definition": "Energy cannot be created or destroyed, only transformed from one form to another"
+                        }
+                    ],
+                    "exam": []
+                }
+            },
+            "quiz": [
+                {
+                    "question": "What is kinetic energy?",
+                    "options": ["Stored energy", "Energy of motion", "Heat energy", "Light energy"],
+                    "correct": 1
+                }
+            ],
+            "terms": [
+                {
+                    "term": "Kinetic Energy",
+                    "definition": "The energy an object has due to its motion"
+                }
+            ],
+            "exam": []
+        }
+    },
+    "biology": {
+        "1. Cell Biology": {
+            "subtopics": {
+                "1.1 Cell Structure": {
+                    "quiz": [
+                        {
+                            "question": "What is the powerhouse of the cell?",
+                            "options": ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Mitochondria",
+                            "definition": "The organelle responsible for producing ATP energy in cells"
+                        }
+                    ],
+                    "exam": []
+                },
+                "1.2 Cell Division": {
+                    "quiz": [
+                        {
+                            "question": "What is mitosis?",
+                            "options": ["Sexual reproduction", "Cell division resulting in identical cells", "Cell division for gametes", "Protein synthesis"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Mitosis",
+                            "definition": "Cell division resulting in two genetically identical daughter cells"
+                        }
+                    ],
+                    "exam": []
+                }
+            },
+            "quiz": [
+                {
+                    "question": "What is the powerhouse of the cell?",
+                    "options": ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"],
+                    "correct": 1
+                }
+            ],
+            "terms": [
+                {
+                    "term": "Mitochondria",
+                    "definition": "The organelle responsible for producing ATP energy in cells"
+                }
+            ],
+            "exam": []
+        },
+        "2. Genetics": {
+            "subtopics": {
+                "2.1 DNA Structure": {
+                    "quiz": [
+                        {
+                            "question": "What does DNA stand for?",
+                            "options": ["Deoxyribonucleic Acid", "Dynamic Nuclear Acid", "Digital Nucleic Acid", "Double Nuclear Acid"],
+                            "correct": 0
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "DNA",
+                            "definition": "Deoxyribonucleic acid, the molecule that carries genetic information"
+                        }
+                    ],
+                    "exam": []
+                },
+                "2.2 Inheritance": {
+                    "quiz": [
+                        {
+                            "question": "What are alleles?",
+                            "options": ["Types of cells", "Different forms of a gene", "Sex chromosomes", "Types of mutations"],
+                            "correct": 1
+                        }
+                    ],
+                    "terms": [
+                        {
+                            "term": "Allele",
+                            "definition": "One of two or more alternative forms of a gene at the same position on homologous chromosomes"
+                        }
+                    ],
+                    "exam": []
+                }
+            },
+            "quiz": [
+                {
+                    "question": "What does DNA stand for?",
+                    "options": ["Deoxyribonucleic Acid", "Dynamic Nuclear Acid", "Digital Nucleic Acid", "Double Nuclear Acid"],
+                    "correct": 0
+                }
+            ],
+            "terms": [
+                {
+                    "term": "DNA",
+                    "definition": "Deoxyribonucleic acid, the molecule that carries genetic information"
+                }
+            ],
+            "exam": []
+        }
+    }
+} 
