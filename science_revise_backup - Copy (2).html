@@ -1,0 +1,3003 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Science Revise</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+
+
+  <!-- Load question data -->
+<script src="questionsData.js"></script>
+
+
+<style>
+:root[data-theme="light"] {
+    --primary-color: #3B82F6;        /* Medium blue */
+    --primary-dark: #2563EB;         /* Bright blue */
+    --secondary-color: #60A5FA;      /* Light blue */
+    --success-color: #4ADE80;        /* Soft green */
+    --warning-color: #FACC15;        /* Bright gold */
+    --error-color: #F87171;          /* Light red */
+    --bg-primary: #111827;           /* Dark navy */
+    --bg-secondary: #1F2937;         /* Darker grey-blue */
+    --bg-tertiary: #374151;          /* Medium grey-blue */
+    --text-primary: #F9FAFB;         /* Very light grey */
+    --text-secondary: #9CA3AF;       /* Soft grey */
+    --border-color: #4B5563;         /* Dark grey */
+    --shadow: 0 1px 5px 0 rgba(59, 130, 246, 0.4);
+}
+
+:root[data-theme="dark"] {
+    --primary-color: #3B82F6;        /* Medium blue */
+    --primary-dark: #2563EB;         /* Bright blue */
+    --secondary-color: #60A5FA;      /* Light blue */
+    --success-color: #4ADE80;        /* Soft green */
+    --warning-color: #FACC15;        /* Bright gold */
+    --error-color: #F87171;          /* Light red */
+    --bg-primary: #111827;           /* Dark navy */
+    --bg-secondary: #1F2937;         /* Darker grey-blue */
+    --bg-tertiary: #374151;          /* Medium grey-blue */
+    --text-primary: #F9FAFB;         /* Very light grey */
+    --text-secondary: #9CA3AF;       /* Soft grey */
+    --border-color: #4B5563;         /* Dark grey */
+    --shadow: 0 1px 5px 0 rgba(59, 130, 246, 0.4);
+}
+
+
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 16px 24px;
+            color: white;
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 32px;
+        }
+        
+        .nav-tab {
+            padding: 16px 24px;
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .nav-tab:hover {
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+        
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            padding: 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .study-area {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            max-width: 2000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .subject-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            padding: 32px;
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .subject-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subject-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px -8px rgba(79, 70, 229, 0.3);
+        }
+        
+        .subject-card.selected {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .subject-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary-color);
+            transition: all 0.2s ease;
+        }
+        
+        .subject-card.selected .subject-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .subject-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .subject-card p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .section-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+        
+        .section-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .section-content {
+            padding: 24px;
+        }
+        
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .topic-item {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .topic-item:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
+        }
+        
+        .topic-item.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        
+        .btn {
+            padding: 10px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .mode-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .mode-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .mode-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px -8px rgba(79, 70, 229, 0.2);
+        }
+        
+        .mode-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 12px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--primary-color);
+        }
+        
+        .mode-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .mode-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .question-container {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .question-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+        
+        .options-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .option {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 16px;
+        }
+        
+        .option:hover {
+            border-color: var(--primary-color);
+            background: var(--bg-tertiary);
+            transform: translateX(4px);
+        }
+        
+        .option.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .option.correct {
+            border-color: var(--success-color);
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .option.incorrect {
+            border-color: var(--error-color);
+            background: var(--error-color);
+            color: white;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+        }
+        
+        .progress-info {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .feedback {
+            padding: 16px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .feedback.correct {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+        
+        .feedback.incorrect {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+        
+        .terms-container {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .term-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+        }
+        
+        .definition-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            resize: vertical;
+            margin-bottom: 20px;
+            font-family: inherit;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .definition-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .rating-buttons {
+            display: flex;
+            gap: 16px;             /* a bit bigger gap */
+            justify-content: center;
+            margin: 30px 0;        /* more vertical margin */
+            font-size: 1.2rem;     /* increase font size */
+        }
+        
+        .rating-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
+        
+        .rating-btn.hard {
+            background: var(--error-color);
+            color: white;
+        }
+        
+        .rating-btn.medium {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .rating-btn.easy {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .rating-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        .settings-container {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 32px;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .setting-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: var(--primary-color);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(26px);
+        }
+        
+        .progress-overview {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+        
+        .progress-charts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .chart-container {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .chart-title {
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .mastery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .mastery-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .mastery-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .mastery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .mastery-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .mastery-percentage {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: width 0.3s ease;
+        }
+        
+        .mastery-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .sidebar-section {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        
+        .sidebar-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .sidebar-content {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        /* Notification System */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .notification {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            min-width: 300px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInRight 0.3s ease;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .notification:hover {
+            transform: translateX(-4px);
+        }
+        
+        .notification.success {
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .notification.error {
+            border-left: 4px solid var(--error-color);
+        }
+        
+        .notification.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .notification.info {
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .notification-icon {
+            font-size: 18px;
+        }
+        
+        .notification.success .notification-icon {
+            color: var(--success-color);
+        }
+        
+        .notification.error .notification-icon {
+            color: var(--error-color);
+        }
+        
+        .notification.warning .notification-icon {
+            color: var(--warning-color);
+        }
+        
+        .notification.info .notification-icon {
+            color: var(--primary-color);
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .notification-message {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .notification-close {
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+        
+        .notification-close:hover {
+            color: var(--text-primary);
+        }
+        
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+        
+        .fade-out {
+            animation: fadeOut 0.3s ease forwards;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .subject-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .mode-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .progress-charts {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .nav-tabs {
+                padding: 0 16px;
+                overflow-x: auto;
+            }
+            
+            .main-content {
+                padding: 16px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .notification {
+                min-width: 280px;
+            }
+            
+            .notification-container {
+                left: 20px;
+                right: 20px;
+            }
+        }
+    
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+.bounce-in {
+    animation: bounceIn 0.4s ease forwards;
+}
+
+/* Special styling for settings section */
+#settings-section {
+    grid-template-columns: 1fr;
+    display: grid;
+}
+
+#settings-section .study-area {
+    width: 100%;
+    max-width: 800px;
+}
+
+#settings-section .settings-container {
+    padding: 32px;
+}
+
+.sidebar {
+</style>
+</head>
+<body data-theme="light">
+<div class="notification-container" id="notification-container"></div>
+<div class="container">
+</style>
+</head>
+<body data-theme="light">
+<div class="notification-container" id="notification-container"></div>
+<div class="container">
+<div class="header">
+<div class="header-content">
+<h1>Science Revise</h1>
+<div class="header-actions">
+<span style="opacity: 0.7; font-size: 20px;">JackGPT ltd</span>
+</div>
+</div>
+</div>
+<div class="nav-tabs">
+<button class="nav-tab active" id="home-tab" data-section="home" onclick="resetToHome()">Home
+</div>
+<!-- Home Section -->
+<div class="main-content" id="home-section">
+<div class="study-area">
+<div class="streak-banner" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; padding: 16px; border-radius: 8px; margin-bottom: 24px; text-align: center;">
+<div style="font-size: 14px; margin-bottom: 4px;">Current Study Streak</div>
+<div style="font-size: 32px; font-weight: bold;" id="home-study-streak">0</div>
+<div style="font-size: 12px; opacity: 0.8;">days in a row</div>
+</div>
+
+<div class="subject-selection" id="subject-selection">
+<div class="subject-card" data-subject="chemistry">
+<div class="subject-icon">
+<i class="fas fa-flask"></i>
+</div>
+<h3>Chemistry</h3>
+<p>Atoms, Molecules &amp; Reactions</p>
+</div>
+<div class="subject-card" data-subject="physics">
+<div class="subject-icon">
+<i class="fas fa-atom"></i>
+</div>
+<h3>Physics</h3>
+<p>Forces, Energy &amp; Motion</p>
+</div>
+<div class="subject-card" data-subject="biology">
+<div class="subject-icon">
+<i class="fas fa-dna"></i>
+</div>
+<h3>Biology</h3>
+<p>Life, Cells &amp; Evolution</p>
+</div>
+</div>
+
+<div class="section-content hidden" id="topic-selection">
+<div class="section-header">
+<h3>Select Topics to Study</h3>
+</div>
+<div style="padding: 30px;">
+<div class="topic-grid" id="topic-grid"></div>
+<div class="button-group">
+<button class="btn" id="select-all-btn">Select All</button>
+<button class="btn" id="clear-all-btn">Clear All</button>
+<button class="btn btn-primary" id="study-btn" style="display: block; width: 100vw; margin: 0; padding: 14px 0; text-align: center;">
+  <i class="fas fa-play" style="margin-right: 26px;"></i>Study
+</button>
+
+
+</div>
+</div>
+</div>
+
+<div class="section-content hidden" id="mode-selection-container">
+<div class="section-header">
+<h3>Choose Study Mode</h3>
+</div>
+<div style="padding: 24px;">
+<div class="mode-selection">
+<div class="mode-card" data-mode="quiz">
+<div class="mode-icon">
+<i class="fas fa-question-circle"></i>
+</div>
+<h4>Smart Quiz</h4>
+<p>Multiple choice questions</p>
+</div>
+<div class="mode-card" data-mode="terms">
+<div class="mode-icon">
+<i class="fas fa-book-open"></i>
+</div>
+<h4>Smart Terms</h4>
+<p>Define key concepts</p>
+</div>
+<div class="mode-card" data-mode="exam">
+<div class="mode-icon">
+<i class="fas fa-graduation-cap"></i>
+</div>
+<h4>Exam Questions</h4>
+<p>With Typing & Marking</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Question Container -->
+<div class="hidden" id="question-section">
+<div class="streak-counter" style="background: var(--primary-color); color: white; padding: 10px 16px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+<span>Current Streak: </span><span id="streak-count" style="margin-left: 8px; font-size: 20px;">0</span>
+</div>
+<div class="question-progress" style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
+<div id="question-progress-bar" style="height: 100%; width: 0%; background: var(--error-color);"></div>
+</div>
+<div class="score-display" style="text-align: right; margin-bottom: 10px; font-size: 14px; color: var(--text-secondary);">
+Score: <span id="correct-count">0</span>
+</div>
+<div class="question-container">
+<div class="question-text" id="question-text"></div>
+<div class="options-grid" id="options-container"></div>
+<div id="feedback-container"></div>
+<div class="controls">
+<div class="progress-info">
+<span id="progress-text"></span>
+</div>
+<div style="max-width: 800px; margin: 0 auto;">
+<button class="btn btn-primary" id="next-btn">
+                                Next<i class="fas fa-chevron-right" style="margin-left: 20px;"></i>
+</button>
+
+
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="progress-overview-container" class="analytics-section study-area" style="margin-top: 32px; background: var(--bg-primary); border-radius: 16px; border: 1px solid var(--border-color); padding: 24px;">
+
+
+    
+    <h3 style="margin-bottom: 24px; display: flex; align-items: center;">
+        <i class="fas fa-chart-line" style="margin-right: 12px; color: var(--primary-color);"></i>Progress Overview
+    </h3>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 24px;">
+        <div class="stats-card" style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; text-align: center;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--primary-color); margin-bottom: 8px;" id="home-avg-score">0%</div>
+            <div style="font-size: 14px; color: var(--text-secondary);">Average Score</div>
+        </div>
+        <div class="stats-card" style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; text-align: center;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--success-color); margin-bottom: 8px;" id="home-total-questions">0</div>
+            <div style="font-size: 14px; color: var(--text-secondary);">Questions Answered</div>
+        </div>
+        <div class="stats-card" style="background: var(--bg-secondary); border-radius: 12px; padding: 20px; text-align: center;">
+            <div style="font-size: 24px; font-weight: 700; color: var(--warning-color); margin-bottom: 8px;" id="home-topics-mastered">0</div>
+            <div style="font-size: 14px; color: var(--text-secondary);">Topics Mastered</div>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+        <h4 style="font-size: 16px;">Mastery Progress</h4>
+        <span style="font-size: 14px; color: var(--text-secondary);">Updated today</span>
+    </div>
+    
+    <div id="home-mastery-progress" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+        <!-- Will be populated dynamically -->
+        <div style="text-align: center; color: var(--text-secondary); padding: 20px; grid-column: 1/-1;">
+            Start studying to see your progress here!
+        </div>
+    </div>
+</div>
+
+<!-- Terms Container -->
+<div class="terms-container hidden" id="terms-section">
+<div class="streak-counter" style="background: var(--primary-color); color: white; padding: 10px 16px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; font-weight: bold;">
+<span>Term Mastery</span>
+</div>
+<div class="term-progress" style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
+<div id="term-progress-bar" style="height: 100%; width: 0%; background: var(--error-color);"></div>
+</div>
+
+<div class="term-text" id="term-text"></div>
+<textarea class="definition-input" id="definition-input" placeholder="Write your definition here..."></textarea>
+<div class="button-group">
+<button class="btn btn-primary" id="show-def-btn">
+<i class="fas fa-eye" style="margin-right: 8px;"></i>Show Answer
+                        </button>
+</div>
+<div id="term-feedback"></div>
+<div class="rating-buttons hidden" id="rating-buttons">
+<button class="rating-btn hard" data-rating="hard">
+<i class="fas fa-times" style="margin-right: 8px;"></i>Hard
+                        </button>
+<button class="rating-btn medium" data-rating="medium">
+<i class="fas fa-minus" style="margin-right: 8px;"></i>Medium
+                        </button>
+<button class="rating-btn easy" data-rating="easy">
+<i class="fas fa-check" style="margin-right: 8px;"></i>Easy
+                        </button>
+</div>
+<div class="controls">
+<button class="btn" id="prev-term-btn">
+<i class="fas fa-chevron-left" style="margin-right: 8px;"></i>Previous
+                        </button>
+<div class="progress-info">
+<span id="term-progress"></span>
+</div>
+<button class="btn btn-primary" id="next-btn">
+                                Next<i class="fas fa-chevron-right" style="margin-left: 20px;"></i>
+</button>
+</div>
+</div>
+</div>
+<div class="sidebar">
+</div>
+</div>
+</div>
+
+<!-- Reports Section -->
+<div class="main-content hidden" id="reports-section">
+<div class="study-area">
+<div class="progress-overview">
+<div class="section-header" style="margin: -32px -32px 32px -32px;">
+<h3><i class="fas fa-chart-line" style="margin-right: 12px;"></i>Progress Overview</h3>
+</div>
+<div class="progress-charts">
+<div class="chart-container">
+<div class="chart-title">Smart Quiz</div>
+<canvas height="200" id="quizChart" width="200"></canvas>
+<div style="margin-top: 12px; font-size: 14px; color: var(--text-secondary);">
+                                Last attempt: <span id="quiz-last-attempt">Not started</span>
+</div>
+</div>
+<div class="chart-container">
+<div class="chart-title">Smart Terms</div>
+<canvas height="200" id="termsChart" width="200"></canvas>
+<div style="margin-top: 12px; font-size: 14px; color: var(--text-secondary);">
+                                Last attempt: <span id="terms-last-attempt">Not started</span>
+</div>
+</div>
+<div class="chart-container">
+<div class="chart-title">Smart Advance</div>
+<canvas height="200" id="advanceChart" width="200"></canvas>
+<div style="margin-top: 12px; font-size: 14px; color: var(--text-secondary);">
+                                Last attempt: <span id="advance-last-attempt">Not started</span>
+</div>
+</div>
+</div>
+<div class="mastery-grid" id="mastery-grid"></div>
+</div>
+</div>
+<div class="sidebar">
+<div class="sidebar-section">
+<div class="sidebar-header">
+<h3>Overall Stats</h3>
+</div>
+<div class="sidebar-content">
+<div style="display: grid; gap: 16px;">
+<div>
+<div id="avg-score" style="font-size: 24px; font-weight: 700; color: var(--primary-color);">0%</div>
+<div style="font-size: 12px; color: var(--text-secondary);">Average Score</div>
+</div>
+<div>
+<div id="total-questions" style="font-size: 24px; font-weight: 700; color: var(--success-color);">0</div>
+<div style="font-size: 12px; color: var(--text-secondary);">Questions Answered</div>
+</div>
+<div>
+<div id="topics-mastered" style="font-size: 24px; font-weight: 700; color: var(--warning-color);">0</div>
+<div style="font-size: 12px; color: var(--text-secondary);">Topics Mastered</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-header">
+<h3>Study Streak</h3>
+</div>
+<div class="sidebar-content">
+<div id="study-streak" style="font-size: 32px; font-weight: 700; color: var(--warning-color); margin-bottom: 8px;">0</div>
+<div style="font-size: 14px; color: var(--text-secondary);">Days in a row</div>
+<div style="margin-top: 16px; font-size: 12px; color: var(--text-secondary);">
+                            Keep studying to maintain your streak!
+                        </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Settings Section -->
+<div class="section-content settings-content hidden" id="settings-section" 
+     style="grid-template-columns: 1fr; max-width: 1000px; margin: 0 auto; background: lightblue; min-height: 200px;">
+<div class="study-area" style="width: 100%; margin: 0 auto;">
+<div class="settings-container" style="padding: 32px;">
+<div class="section-header" style="margin: -32px -32px 32px -32px;">
+<h3><i class="fas fa-cog" style="margin-right: 12px;"></i>Settings</h3>
+</div>
+<div class="setting-item">
+<div>
+<div class="setting-label">Dark Mode</div>
+<div class="setting-description">Switch between light and dark themes</div>
+</div>
+<div class="toggle-switch" id="theme-toggle"></div>
+</div>
+<div class="setting-item">
+<div>
+<div class="setting-label">Auto Progress</div>
+<div class="setting-description">Automatically advance to next question after answering</div>
+</div>
+<div class="toggle-switch" id="auto-progress-toggle"></div>
+</div>
+<div class="setting-item">
+<div>
+<div class="setting-label">Sound Effects</div>
+<div class="setting-description">Play sounds for correct/incorrect answers</div>
+</div>
+<div class="toggle-switch active" id="sound-toggle"></div>
+</div>
+<div class="setting-item">
+<div>
+<div class="setting-label">Shuffle Questions</div>
+<div class="setting-description">Randomize question order in study sessions</div>
+</div>
+<div class="toggle-switch active" id="shuffle-toggle"></div>
+</div>
+<div class="setting-item">
+<div>
+<div class="setting-label">Show Immediate Feedback</div>
+<div class="setting-description">Display answer feedback right after selection</div>
+</div>
+<div class="toggle-switch active" id="feedback-toggle"></div>
+</div>
+<div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--border-color);">
+<h4 style="margin-bottom: 16px; color: var(--text-primary);">Data Management</h4>
+<div class="button-group">
+<button class="btn" id="export-btn">
+<i class="fas fa-download" style="margin-right: 8px;"></i>Export Data
+                            </button>
+<button class="btn" id="import-btn">
+<i class="fas fa-upload" style="margin-right: 8px;"></i>Import Data
+                            </button>
+<button class="btn" id="reset-progress-btn" style="background: var(--warning-color); color: white; border-color: var(--warning-color);">
+<i class="fas fa-refresh" style="margin-right: 8px;"></i>Reset Progress
+                            </button>
+<button class="btn" id="clear-data-btn" style="background: var(--error-color); color: white; border-color: var(--error-color);">
+<i class="fas fa-trash" style="margin-right: 8px;"></i>Clear All Data
+                            </button>
+</div>
+</div>
+<input accept=".json" id="import-file" style="display: none;" type="file"/>
+</div>
+</div>
+</div>
+
+
+
+<script>
+
+
+
+        // Global variables
+        let progressData = JSON.parse(localStorage.getItem('smartReviseProgress')) || {};
+        let settings = JSON.parse(localStorage.getItem('smartReviseSettings')) || {
+            darkMode: false,
+            autoProgress: false,
+            sounds: true,
+            shuffle: true,
+            immediateReading: true
+        };
+        let currentSubject = '';
+        let selectedTopics = [];
+        let currentMode = '';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let correctAnswers = 0;
+        let currentStreak = 0;
+        let maxStreak = 0;
+        let charts = {};
+
+        resetToHome()
+
+
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProgress();
+            initializeSettings();
+            setupEventListeners();
+            updateReportsDisplay();
+            updateHomeAnalytics();
+            
+            // Direct event listener for settings tab to ensure it works
+            document.getElementById('settings-tab').addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log("Settings tab clicked directly");
+                
+                // Hide all other sections
+                document.getElementById('home-section').classList.add('hidden');
+                document.getElementById('reports-section').classList.add('hidden');
+                document.getElementById('subject-selection').classList.add('hidden');
+                document.getElementById('topic-selection').classList.add('hidden');
+                document.getElementById('mode-selection-container').classList.add('hidden');
+                document.getElementById('question-section').classList.add('hidden');
+                document.getElementById('terms-section').classList.add('hidden');                
+                
+                // Update active tab
+                document.querySelectorAll('.nav-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.getElementById('settings-tab').classList.add('active');
+                
+                // Show settings section
+                document.getElementById('settings-section').classList.remove('hidden');
+                
+                return false;
+            });
+        });
+
+        function setupEventListeners() {
+            // Navigation tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    showSection(this.dataset.section);
+                });
+            });
+
+            // Subject cards
+            document.querySelectorAll('.subject-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    selectSubject(this.dataset.subject);
+                });
+            });
+
+            // Mode cards
+            document.querySelectorAll('.mode-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    startMode(this.dataset.mode);
+                });
+            });
+
+            // Report items
+            document.querySelectorAll('.report-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    showReport(this.dataset.report);
+                });
+            });
+
+            // Buttons
+            document.getElementById('select-all-btn').addEventListener('click', selectAllTopics);
+            document.getElementById('clear-all-btn').addEventListener('click', clearTopics);
+            document.getElementById('study-btn').addEventListener('click', showModeSelection);
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+            document.getElementById('show-def-btn').addEventListener('click', () => {
+    showDefinition();
+    document.getElementById("rating-buttons").classList.remove("hidden");
+});
+            document.getElementById('prev-term-btn').addEventListener('click', previousTerm);
+            document.getElementById('next-term-btn').addEventListener('click', nextTerm);
+
+            // Rating buttons
+            document.querySelectorAll('.rating-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    rateAnswer(this.dataset.rating);
+                });
+            });
+
+            // Settings toggles
+            document.getElementById('theme-toggle').addEventListener('click', function() {
+                toggleTheme();
+                console.log("Theme toggled");
+            });
+            document.getElementById('auto-progress-toggle').addEventListener('click', () => {
+                toggleSetting('autoProgress');
+                console.log("Auto progress toggled");
+            });
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                toggleSetting('sounds');
+                console.log("Sound toggled");
+            });
+            document.getElementById('shuffle-toggle').addEventListener('click', () => {
+                toggleSetting('shuffle');
+                console.log("Shuffle toggled");
+            });
+            document.getElementById('feedback-toggle').addEventListener('click', () => {
+                toggleSetting('immediateReading');
+                console.log("Feedback toggled");
+            });
+
+            // Data management
+            document.getElementById('export-btn').addEventListener('click', exportData);
+            document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+            document.getElementById('import-file').addEventListener('change', importData);
+            document.getElementById('reset-progress-btn').addEventListener('click', resetProgress);
+            document.getElementById('clear-data-btn').addEventListener('click', clearAllData);
+        }
+
+        // Notification System
+        function showNotification(title, message, type = 'info', duration = 4000) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const iconMap = {
+                success: 'fa-check-circle',
+                error: 'fa-times-circle',
+                warning: 'fa-exclamation-triangle',
+                info: 'fa-info-circle'
+            };
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas ${iconMap[type]}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+                <div class="notification-close">
+                    <i class="fas fa-times"></i>
+                </div>
+            `;
+            
+            // Close functionality
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                removeNotification(notification);
+            });
+            
+            notification.addEventListener('click', () => {
+                removeNotification(notification);
+            });
+            
+            container.appendChild(notification);
+            
+            // Auto remove
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    removeNotification(notification);
+                }
+            }, duration);
+        }
+
+        function removeNotification(notification) {
+            notification.classList.add('fade-out');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+
+        function initializeProgress() {
+            for (let subject in questionData) {
+                if (!progressData[subject]) {
+                    progressData[subject] = {};
+                }
+                for (let topic in questionData[subject]) {
+                    if (!progressData[subject][topic]) {
+                        progressData[subject][topic] = {
+                            quiz: { correct: 0, total: 0, streak: 0, mastered: false, lastAttempt: null },
+                            terms: { ratings: {}, total: 0, mastered: false, lastAttempt: null },
+                            exam: { correct: 0, total: 0, streak: 0, mastered: false, lastAttempt: null }
+                        };
+                    }
+                }
+            }
+            saveProgress();
+        }
+
+        function initializeSettings() {
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', settings.darkMode ? 'dark' : 'light');
+            
+            // Update toggle states
+            document.getElementById('theme-toggle').classList.toggle('active', settings.darkMode);
+            document.getElementById('auto-progress-toggle').classList.toggle('active', settings.autoProgress);
+            document.getElementById('sound-toggle').classList.toggle('active', settings.sounds);
+            document.getElementById('shuffle-toggle').classList.toggle('active', settings.shuffle);
+            document.getElementById('feedback-toggle').classList.toggle('active', settings.immediateReading);
+        }
+
+        function saveProgress() {
+            localStorage.setItem('smartReviseProgress', JSON.stringify(progressData));
+        }
+
+        function saveSettings() {
+            localStorage.setItem('smartReviseSettings', JSON.stringify(settings));
+        }
+
+        function showSection(section) {
+            // First hide all study-related sections
+            document.getElementById('subject-selection').classList.add('hidden');
+            document.getElementById('topic-selection').classList.add('hidden');
+            document.getElementById('mode-selection-container').classList.add('hidden');
+            document.getElementById('question-section').classList.add('hidden');
+            document.getElementById('terms-section').classList.add('hidden');
+            
+            // Update nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+
+            // Hide all sections
+            document.querySelectorAll('#home-section, #reports-section, #settings-section').forEach(sec => {
+                sec.classList.add('hidden');
+            });
+
+            // Show selected section
+            document.getElementById(section + '-section').classList.remove('hidden');
+
+            // If showing home, make sure subject selection is visible
+            if (section === 'home') {
+                document.getElementById('subject-selection').classList.remove('hidden');
+            }
+            
+            // If showing reports, update the display
+            if (section === 'reports') {
+                updateReportsDisplay();
+            }
+            
+            // Force redraw to ensure everything is displayed properly
+            window.dispatchEvent(new Event('resize'));
+        }
+        
+        // Dedicated function for showing settings to ensure it always works
+        function showSettingsSection() {
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById('settings-tab').classList.add('active');
+
+            // 💡 Important: show the settings section
+            const settingsSection = document.getElementById('settings-section');
+            if (settingsSection) {
+                settingsSection.classList.remove('hidden');
+            } else {
+                console.error("❌ settings-section not found");
+            }
+        }
+
+
+        function selectSubject(subject) {
+            currentSubject = subject;
+            
+            // Update UI
+            document.querySelectorAll('.subject-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelector(`[data-subject="${subject}"]`).classList.add('selected');
+            
+            // Show topic selection
+            document.getElementById('topic-selection').classList.remove('hidden');
+            document.getElementById('mode-selection-container').classList.add('hidden');
+            populateTopics();
+            
+            // Removed notification
+        }
+
+        function populateTopics() {
+            const topicGrid = document.getElementById('topic-grid');
+            topicGrid.innerHTML = '';
+            selectedTopics = [];
+            
+            if (questionData[currentSubject]) {
+                for (let topic in questionData[currentSubject]) {
+                    const topicContainer = document.createElement('div');
+                    topicContainer.className = 'topic-container';
+                    topicContainer.style.marginBottom = '15px';
+                    
+                    const topicHeader = document.createElement('div');
+                    topicHeader.className = 'topic-item main-topic';
+                    topicHeader.textContent = topic;
+                    topicHeader.style.fontWeight = '750';
+                    topicHeader.style.backgroundColor = 'var(--bg-tertiary)';
+                    topicHeader.addEventListener('click', function() {
+                        toggleTopic(topic, this);
+                    });
+                    topicContainer.appendChild(topicHeader);
+                    
+                    // Add subtopics if they exist
+                    if (questionData[currentSubject][topic].subtopics) {
+                        const subtopicsContainer = document.createElement('div');
+                        subtopicsContainer.style.display = 'grid';
+                        subtopicsContainer.style.gridTemplateColumns = 'repeat(auto-fill, minmax(180px, 1fr))';
+                        subtopicsContainer.style.gap = '8px';
+                        subtopicsContainer.style.marginTop = '4px';
+                        subtopicsContainer.style.marginLeft = '16px';
+                        subtopicsContainer.style.marginRight= '16px';
+                        
+                        for (let subtopic in questionData[currentSubject][topic].subtopics) {
+                            const subtopicItem = document.createElement('div');
+                            subtopicItem.className = 'topic-item subtopic-item';
+                            subtopicItem.textContent = subtopic;
+                            subtopicItem.style.fontSize = '10px';
+                            subtopicItem.style.justifyContent = 'center';  // horizontal center
+
+                            subtopicItem.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                toggleSubtopic(topic, subtopic, this);
+                            });
+                            subtopicsContainer.appendChild(subtopicItem);
+                        }
+                        
+                        topicContainer.appendChild(subtopicsContainer);
+                    }
+                    
+                    topicGrid.appendChild(topicContainer);
+                }
+            }
+        }
+
+        function toggleTopic(topic, element) {
+            // Check if topic is already selected
+            if (selectedTopics.some(t => t.mainTopic === topic && !t.subtopic)) {
+                // Remove main topic and all its subtopics
+                selectedTopics = selectedTopics.filter(t => t.mainTopic !== topic);
+                element.classList.remove('selected');
+                
+                // Deselect all subtopic elements
+                const subtopicElements = element.parentNode.querySelectorAll('.subtopic-item');
+                subtopicElements.forEach(el => el.classList.remove('selected'));
+            } else {
+                // Add main topic
+                selectedTopics.push({ mainTopic: topic, subtopic: null });
+                element.classList.add('selected');
+                
+                // Select all subtopic elements
+                const subtopicElements = element.parentNode.querySelectorAll('.subtopic-item');
+                subtopicElements.forEach(el => {
+                    el.classList.add('selected');
+                    // Get subtopic name from element text
+                    const subtopicName = el.textContent;
+                    // Add subtopic if not already added
+                    if (!selectedTopics.some(t => t.mainTopic === topic && t.subtopic === subtopicName)) {
+                        selectedTopics.push({ mainTopic: topic, subtopic: subtopicName });
+                    }
+                });
+            }
+        }
+        
+        function toggleSubtopic(mainTopic, subtopic, element) {
+            const topicObj = { mainTopic, subtopic };
+            const isSelected = element.classList.contains('selected');
+            
+            if (isSelected) {
+                // Remove this specific subtopic
+                selectedTopics = selectedTopics.filter(
+                    t => !(t.mainTopic === mainTopic && t.subtopic === subtopic)
+                );
+                element.classList.remove('selected');
+                
+                // Also unselect the main topic if it was selected
+                const mainTopicElement = element.closest('.topic-container').querySelector('.main-topic');
+                if (mainTopicElement.classList.contains('selected')) {
+                    mainTopicElement.classList.remove('selected');
+                    selectedTopics = selectedTopics.filter(
+                        t => !(t.mainTopic === mainTopic && t.subtopic === null)
+                    );
+                }
+            } else {
+                // Add this specific subtopic
+                selectedTopics.push(topicObj);
+                element.classList.add('selected');
+                
+                // Check if all subtopics are now selected
+                const subtopicElements = element.closest('.topic-container').querySelectorAll('.subtopic-item');
+                const allSubtopicsSelected = Array.from(subtopicElements).every(el => el.classList.contains('selected'));
+                
+                // If all subtopics are selected, also select the main topic
+                if (allSubtopicsSelected) {
+                    const mainTopicElement = element.closest('.topic-container').querySelector('.main-topic');
+                    mainTopicElement.classList.add('selected');
+                    if (!selectedTopics.some(t => t.mainTopic === mainTopic && t.subtopic === null)) {
+                        selectedTopics.push({ mainTopic, subtopic: null });
+                    }
+                }
+            }
+        }
+
+        function selectAllTopics() {
+            selectedTopics = [];
+
+            const topicData = questionData[currentSubject] || {};
+
+            for (const topic in topicData) {
+                // Add the main topic
+                selectedTopics.push({ mainTopic: topic, subtopic: null });
+
+                // Add all subtopics
+                if (topicData[topic].subtopics) {
+                    for (const subtopic in topicData[topic].subtopics) {
+                        selectedTopics.push({ mainTopic: topic, subtopic });
+                    }
+                }
+            }
+
+            // Select all topic items in the UI
+            document.querySelectorAll('.topic-item').forEach(item => {
+                item.classList.add('selected');
+            });
+
+            showNotification('Topics Selected', `Selected all ${selectedTopics.length} topics`, 'success');
+        }
+
+
+        function clearTopics() {
+            selectedTopics = [];
+            document.querySelectorAll('.topic-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            showNotification('Topics Cleared', 'All topic selections cleared', 'info');
+        }
+
+        function showModeSelection() {
+            if (selectedTopics.length === 0) {
+                showNotification('No Topics Selected', 'Please select at least one topic to study', 'error');
+                return;
+            }
+            document.getElementById('mode-selection-container').classList.remove('hidden');
+        }
+
+        function startMode(mode) {
+            if (!currentSubject || selectedTopics.length === 0) {
+                showNotification('Missing Selection', 'Please select a subject and at least one topic', 'error');
+                return;
+            }
+            
+            currentMode = mode;
+            currentQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            correctAnswers = 0;
+            currentStreak = 0;
+            
+            // Collect questions from selected topics and subtopics
+            selectedTopics.forEach(topicObj => {
+                const { mainTopic, subtopic } = topicObj;
+                
+                // If it's a subtopic
+                if (subtopic) {
+                    const subtopicData = questionData[currentSubject][mainTopic].subtopics[subtopic];
+                    if (subtopicData && subtopicData[mode] && subtopicData[mode].length > 0) {
+                        currentQuestions.push(...subtopicData[mode].map(q => ({
+                            ...q, 
+                            topic: mainTopic,
+                            subtopic: subtopic
+                        })));
+                    }
+                } 
+                // If it's a main topic (and not a subtopic selection)
+                else if (!selectedTopics.some(t => t.mainTopic === mainTopic && t.subtopic)) {
+                    // Only add main topic questions if no subtopics of this topic were specifically selected
+                    const topicData = questionData[currentSubject][mainTopic];
+                    if (topicData[mode] && topicData[mode].length > 0) {
+                        currentQuestions.push(...topicData[mode].map(q => ({
+                            ...q, 
+                            topic: mainTopic,
+                            subtopic: null
+                        })));
+                    }
+                }
+            });
+            
+            if (currentQuestions.length === 0) {
+                showNotification('No Questions Available', `No ${mode} questions found for selected topics`, 'warning');
+                return;
+            }
+            
+            // Shuffle questions if enabled
+            if (settings.shuffle) {
+                currentQuestions.sort(() => Math.random() - 0.5);
+            }
+            
+            // Hide selection UI and show study UI
+            document.getElementById('subject-selection').classList.add('hidden');
+            document.getElementById('topic-selection').classList.add('hidden');
+            document.getElementById('mode-selection-container').classList.add('hidden');
+            
+            // Remove notification to keep it cleaner
+            
+            if (mode === 'terms') {
+                startTermsMode();
+            } else {
+                startQuizMode();
+            }
+        }
+
+        function startQuizMode() {
+            document.getElementById('question-section').classList.remove('hidden');
+            document.getElementById('terms-section').classList.add('hidden');
+
+            document.getElementById('progress-overview-container').classList.add('hidden');    
+
+
+
+            // Shuffle the questions randomly
+            currentQuestions = [...currentQuestions].sort(() => Math.random() - 0.5);
+
+            document.getElementById('total-questions').textContent = currentQuestions.length;
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0; // Ensure you start at the beginning of the shuffled list
+            showQuestion();
+        }
+
+
+        function startTermsMode() {
+            document.getElementById('question-section').classList.add('hidden');
+            document.getElementById('terms-section').classList.remove('hidden');
+            showTerm();
+        }
+
+        let currentShuffledOptions = []; // <--- declare at a higher scope
+
+        function showQuestion() {
+            if (currentQuestionIndex >= currentQuestions.length) {
+                currentQuestionIndex = 0;
+                showQuestion(); // Loop instead of stopping
+                return;
+            }
+
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            document.getElementById('question-text').textContent = currentQuestion.question;
+            document.getElementById('correct-count').textContent = correctAnswers;
+            document.getElementById('streak-count').textContent = currentStreak;
+
+            // Get previous streak from stored progress
+            const oldStreak = getQuestionStreak(currentQuestion);
+            updateProgressBar(oldStreak);  // Show previous progress bar position here
+
+            // **Initialize optionsContainer before using it!**
+            const optionsDiv = document.getElementById('options-container');
+            optionsDiv.innerHTML = '';  // <-- Use after initialization
+
+            if (currentQuestionIndex >= currentQuestions.length) {
+                currentQuestionIndex = 0;
+                showQuestion(); // Loop instead of stopping
+                return;
+            }
+            
+            const question = currentQuestions[currentQuestionIndex];
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('correct-count').textContent = correctAnswers;
+            document.getElementById('streak-count').textContent = currentStreak;
+            
+            // Update progress bar based on streak for this question
+            const questionStreak = getQuestionStreak(question);
+            updateProgressBar(questionStreak);
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            // Create option elements
+            if (question.options && Array.isArray(question.options)) {
+                currentShuffledOptions = question.options
+                    .map((option, index) => ({ option, originalIndex: index }))
+                    .sort(() => Math.random() - 0.5);
+
+                currentShuffledOptions.forEach(({ option, originalIndex }) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.textContent = option;
+                    optionDiv.dataset.index = originalIndex;
+                    optionDiv.addEventListener('click', function() {
+                        selectOption(originalIndex, this);
+                    });
+
+                    optionsContainer.appendChild(optionDiv);
+                });
+            } else {
+                // Fallback if options array is missing
+                console.error('Question options missing or invalid:', question);
+                optionsContainer.innerHTML = '<div class="feedback incorrect"><i class="fas fa-exclamation-triangle"></i> Error: Question options not found</div>';
+            }
+
+            
+            // Clear feedback
+            document.getElementById('feedback-container').innerHTML = '';
+            
+            // Update progress text (empty for looping questions)
+            document.getElementById('progress-text').textContent = '';
+                
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').disabled = false;
+            
+            // Clear userAnswers for this question to prevent auto-selection next time
+            userAnswers[currentQuestionIndex] = null;
+        }
+        
+        function getQuestionStreak(question) {
+            // Get the streak for a specific question from progress data
+            if (!progressData[currentSubject] || 
+                !progressData[currentSubject][question.topic] || 
+                !progressData[currentSubject][question.topic].questionStreaks) {
+                return 0;
+            }
+            
+            // Assuming we have a way to identify questions uniquely, like by their text
+            return progressData[currentSubject][question.topic].questionStreaks[question.question] || 0;
+        }
+        
+        function updateProgressBar(streakValue) {
+            const progressBarElement = document.getElementById('question-progress-bar');
+
+            const streakToWidth = { 0: 0, 1: 33, 2: 66, 3: 100 };
+            const streakToColor = {
+                0: 'var(--error-color)',
+                1: '#f0ad4e',
+                2: 'var(--warning-color)',
+                3: 'var(--success-color)'
+            };
+
+            const width = streakToWidth[streakValue] ?? 0;
+            const color = streakToColor[streakValue] ?? 'var(--error-color)';
+
+            progressBarElement.style.width = `${width}%`;
+            progressBarElement.style.backgroundColor = color;
+        }
+
+
+
+        function selectOption(optionIndex, optionElement) {
+            try {
+                // Clear previous selections
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                    opt.classList.remove('correct');
+                    opt.classList.remove('incorrect');
+                });
+                
+                // Select current option
+                optionElement.classList.add('selected');
+                
+                // Only count as new answer if different from previous
+                const wasNewAnswer = userAnswers[currentQuestionIndex] !== optionIndex;
+                userAnswers[currentQuestionIndex] = optionIndex;
+                
+                // Show immediate feedback if enabled
+                if (settings.immediateReading) {
+                    showFeedback(optionIndex, wasNewAnswer);
+                }
+                
+                // Auto progress if enabled
+                if (settings.autoProgress) {
+                    setTimeout(() => {
+                        nextQuestion();
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Error in selectOption:', error);
+                showNotification('Error', 'An error occurred when selecting an option', 'error');
+            }
+        }
+
+
+
+        const isCorrect = selectedIndex === question.correct;
+
+        function showFeedback(chosenIndex, isFreshAnswer) {
+            try {
+                const currentQuestion = currentQuestions[currentQuestionIndex];
+                const feedbackContainer = document.getElementById('feedback-container');
+
+                if (
+                    !currentQuestion.options ||
+                    !Array.isArray(currentQuestion.options) ||
+                    typeof currentQuestion.correct !== 'number' ||
+                    currentQuestion.correct < 0 ||
+                    currentQuestion.correct >= currentQuestion.options.length
+                ) {
+                    feedbackContainer.innerHTML =
+                        '<div class="feedback incorrect"><i class="fas fa-exclamation-triangle"></i> Error: Invalid question format</div>';
+                    return;
+                }
+
+                const optionElements = document.querySelectorAll('.option');
+                let correctElement = null;
+                let selectedElement = null;
+
+                optionElements.forEach((el) => {
+                    const index = parseInt(el.dataset.index, 10);
+                    if (index === currentQuestion.correct) correctElement = el;
+                    if (index === chosenIndex) selectedElement = el;
+                });
+
+                const isCorrectAnswer = chosenIndex === currentQuestion.correct;
+
+                if (correctElement) correctElement.classList.add('correct');
+                if (!isCorrectAnswer && selectedElement) selectedElement.classList.add('incorrect');
+
+                // Get previous streak before update
+                const oldStreak = getQuestionStreak(currentQuestion);
+
+                // Show previous progress bar immediately
+                updateProgressBar(oldStreak);
+
+                // Calculate new streak
+                let updatedStreak = oldStreak;
+                if (isFreshAnswer) {
+                    if (isCorrectAnswer) {
+                        updatedStreak = oldStreak + 1;
+                    } else {
+                        updatedStreak = 0;
+                    }
+                }
+
+                // Animate to new streak after short delay
+                setTimeout(() => {
+                    updateProgressBar(updatedStreak);
+                }, 300);
+
+                // Update internal counters and progress data
+                if (isFreshAnswer) {
+                    if (isCorrectAnswer) {
+                        correctAnswers++;
+                        currentStreak++;
+                        maxStreak = Math.max(maxStreak, currentStreak);
+                        document.getElementById('streak-count').textContent = currentStreak;
+                        document.getElementById('correct-count').textContent = correctAnswers;
+                        updateProgress(currentQuestion, true);
+                    } else {
+                        currentStreak = 0;
+                        document.getElementById('streak-count').textContent = currentStreak;
+                        updateProgress(currentQuestion, false);
+                    }
+                }
+
+                // Text feedback remains unchanged
+                let feedbackHTML = '';
+                if (isCorrectAnswer) {
+                    feedbackHTML = '<div class="feedback correct"><i class="fas fa-check-circle"></i>Correct! Good job!</div>';
+                    if (currentQuestion.explanation) {
+                        feedbackHTML += `<div class="feedback correct"><i class="fas fa-info-circle"></i>${currentQuestion.explanation}</div>`;
+                    }
+                } else {
+                    feedbackHTML = `<div class="feedback incorrect"><i class="fas fa-times-circle"></i>Incorrect. The correct answer is: ${currentQuestion.options[currentQuestion.correct]}</div>`;
+                    if (currentQuestion.explanation) {
+                        feedbackHTML += `<div class="feedback incorrect"><i class="fas fa-info-circle"></i>${currentQuestion.explanation}</div>`;
+                    }
+                }
+
+                feedbackContainer.innerHTML = feedbackHTML;
+
+            } catch (error) {
+                console.error('Error in showFeedback:', error);
+            }
+        }
+
+
+        function updateHomeAnalytics() {
+            let totalQuestions = 0;
+            let totalCorrect = 0;
+            let masteredTopics = 0;
+            
+            // Reset mastery progress container
+            const masteryContainer = document.getElementById('home-mastery-progress');
+            masteryContainer.innerHTML = '';
+            
+            let hasProgress = false;
+            
+            // Go through all subjects and topics
+            for (let subject in progressData) {
+                for (let topic in progressData[subject]) {
+                    const topicData = progressData[subject][topic];
+                    
+                    // Count mastered topics
+                    if (topicData.quiz.mastered || topicData.terms.mastered || topicData.exam.mastered) {
+                        masteredTopics++;
+                    }
+                    
+                    // Count questions
+                    totalQuestions += topicData.quiz.total + topicData.exam.total + Object.keys(topicData.terms.ratings || {}).length;
+                    totalCorrect += topicData.quiz.correct + topicData.exam.correct;
+                    
+                    // Count good term ratings as correct
+                    const ratings = Object.values(topicData.terms.ratings || {});
+                    totalCorrect += ratings.filter(r => r === 'easy' || r === 'medium').length;
+                    
+                    // Add to mastery progress display for any topic with activity
+                    if (topicData.quiz.total > 0 || topicData.exam.total > 0 || Object.keys(topicData.terms.ratings || {}).length > 0) {
+                        hasProgress = true;
+                        let percentage = 0;
+                        let totalAnswered = 0;
+                        let totalAvailable = 0;
+                        
+                        // Calculate overall percentage across modes
+                        if (topicData.quiz.total > 0) {
+                            percentage += (topicData.quiz.correct / topicData.quiz.total) * (topicData.quiz.total);
+                            totalAnswered += topicData.quiz.total;
+                        }
+                        
+                        if (topicData.exam.total > 0) {
+                            percentage += (topicData.exam.correct / topicData.exam.total) * (topicData.exam.total);
+                            totalAnswered += topicData.exam.total;
+                        }
+                        
+                        const termRatings = Object.values(topicData.terms.ratings || {});
+                        if (termRatings.length > 0) {
+                            const goodRatings = termRatings.filter(r => r === 'easy' || r === 'medium').length;
+                            percentage += (goodRatings / termRatings.length) * termRatings.length;
+                            totalAnswered += termRatings.length;
+                        }
+                        
+                        // Calculate final percentage
+                        percentage = totalAnswered > 0 ? Math.round((percentage / totalAnswered) * 100) : 0;
+                        
+                        // Create mastery card
+                        const card = document.createElement('div');
+                        card.className = 'mastery-card';
+                        card.style.background = 'var(--bg-secondary)';
+                        card.style.borderRadius = '8px';
+                        card.style.padding = '16px';
+                        
+                        // Set color based on mastery
+                        let statusColor = percentage >= 80 ? 'var(--success-color)' : 
+                                        percentage >= 60 ? 'var(--warning-color)' : 
+                                        'var(--error-color)';
+                                        
+                        // Mastery badge
+                        const masteryBadge = (topicData.quiz.mastered || topicData.terms.mastered || topicData.exam.mastered) ? 
+                            '<span style="background: var(--success-color); color: white; font-size: 11px; padding: 2px 6px; border-radius: 12px; margin-left: 8px;">Mastered</span>' : '';
+                        
+                        card.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                <div style="font-weight: 600; color: var(--text-primary);">${subject} - ${topic}</div>
+                                <div style="color: ${statusColor}; font-weight: 600;">${percentage}%${masteryBadge}</div>
+                            </div>
+                            <div style="height: 6px; background: var(--bg-tertiary); border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
+                                <div style="height: 100%; width: ${percentage}%; background: ${statusColor};"></div>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">
+                                ${totalAnswered} questions answered
+                            </div>
+                        `;
+                        
+                        masteryContainer.appendChild(card);
+                    }
+                }
+            }
+            
+            // If no progress data, show message
+            if (!hasProgress) {
+                masteryContainer.innerHTML = `
+                    <div style="text-align: center; color: var(--text-secondary); padding: 20px; grid-column: 1/-1;">
+                        Start studying to see your progress here!
+                    </div>
+                `;
+            }
+            
+            // Update summary stats
+            const avgScore = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+            document.getElementById('home-avg-score').textContent = avgScore + '%';
+            document.getElementById('home-total-questions').textContent = totalQuestions;
+            document.getElementById('home-topics-mastered').textContent = masteredTopics;
+            
+            // Simulate a study streak for demo purposes (this would normally be based on daily usage)
+            const streak = 3; // Placeholder value
+            document.getElementById('home-study-streak').textContent = streak;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                
+                if (currentMode === 'exam') {
+                    showExamQuestion();
+                } else {
+                    showQuestion();
+                }
+            } else {
+                // Loop back to start instead of showing results
+                currentQuestionIndex = 0;
+                if (currentMode === 'exam') {
+                    showExamQuestion();
+                } else {
+                    showQuestion();
+                }
+            }
+        }
+        
+        function showExamQuestion() {
+            try {
+                const question = currentQuestions[currentQuestionIndex];
+                if (!question) {
+                    console.error('Invalid exam question data:', question);
+                    return;
+                }
+                
+                document.getElementById('question-text').textContent = question.question;
+                document.getElementById('correct-count').textContent = correctAnswers;
+                document.getElementById('streak-count').textContent = currentStreak;
+
+                // Get marking points from the question or use default ones
+                const markingPoints = question.markingPoints || [
+                    "Basic concept understanding (1 mark)",
+                    "Correct terminology (1 mark)",
+                    "Detailed explanation (2 marks)",
+                    "Appropriate examples (1 mark)"
+                ];
+                
+                // Create marking scheme HTML
+                let markingPointsHTML = '';
+                markingPoints.forEach((point, index) => {
+                    markingPointsHTML += `
+                        <div class="marking-point">
+                            <input type="checkbox" id="mark-point-${index+1}" class="mark-checkbox">
+                            <label for="mark-point-${index+1}">Point ${index+1}: ${point}</label>
+                        </div>
+                    `;
+                });
+
+                const optionsContainer = document.getElementById('options-container');
+                optionsContainer.innerHTML = `
+                    <textarea id="typed-answer" placeholder="Type your answer here..." style="width: 100%; min-height: 120px; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-size: 16px; margin-bottom: 20px;"></textarea>
+                    <div class="marking-scheme" style="margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 12px;">Marking Scheme:</h4>
+                        <div class="marking-points" id="marking-points">
+                            ${markingPointsHTML}
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px;">
+                        <button class="btn btn-primary" id="submit-marks-btn">Submit Marks</button>
+                    </div>
+                `;
+                
+                // Add event listener to the submit marks button
+                setTimeout(() => {
+                    const submitBtn = document.getElementById('submit-marks-btn');
+                    if (submitBtn) {
+                        // Remove any existing listeners
+                        const newBtn = submitBtn.cloneNode(true);
+                        submitBtn.parentNode.replaceChild(newBtn, submitBtn);
+                        newBtn.addEventListener('click', calculateMarks);
+                    }
+                }, 10);
+                
+                document.getElementById('feedback-container').innerHTML = "";
+            } catch (error) {
+                console.error('Error in showExamQuestion:', error);
+                showNotification('Error', 'An error occurred when showing the exam question', 'error');
+            }
+        }
+
+        function calculateMarks() {
+            try {
+                const checkboxes = document.querySelectorAll('.mark-checkbox:checked');
+                let totalMarks = 0;
+                
+                checkboxes.forEach(checkbox => {
+                    // Get the mark value from the ID or a data attribute
+                    // This simple implementation assumes 1 mark per point, but you could extend it
+                    if (checkbox.id === 'mark-point-3') {
+                        totalMarks += 2; // This point is worth 2 marks as per the label
+                    } else {
+                        totalMarks += 1;
+                    }
+                });
+                
+                // Update progress and stats
+                const question = currentQuestions[currentQuestionIndex];
+                const feedbackContainer = document.getElementById('feedback-container');
+                
+                feedbackContainer.innerHTML = `
+                    <div class="feedback correct">
+                        <i class="fas fa-check-circle"></i>
+                        You've awarded ${totalMarks} mark${totalMarks !== 1 ? 's' : ''} for this answer.
+                    </div>
+                `;
+                
+                // Update statistics
+                correctAnswers += totalMarks;
+                document.getElementById('correct-count').textContent = correctAnswers;
+                
+                // Update progress
+                updateProgress(question, totalMarks > 0);
+                
+                // Enable next button or auto-progress
+                if (settings.autoProgress) {
+                    setTimeout(() => {
+                        nextQuestion();
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error('Error in calculateMarks:', error);
+                showNotification('Error', 'An error occurred when calculating marks', 'error');
+            }
+        }
+
+        function showResults() {
+            const percentage = Math.round((correctAnswers / currentQuestions.length) * 100);
+            const modeName = currentMode === 'quiz' ? 'Smart Quiz' : currentMode === 'terms' ? 'Smart Terms' : 'Smart Advance';
+            
+            let message = `${modeName} Complete!\n\nScore: ${correctAnswers}/${currentQuestions.length} (${percentage}%)\nMax Streak: ${maxStreak}`;
+            let notificationType = 'success';
+            
+            if (percentage >= 80) {
+                message += '\n\nExcellent work! 🎉';
+            } else if (percentage >= 60) {
+                message += '\n\nGood job! Keep practicing! 👍';
+                notificationType = 'info';
+            } else {
+                message += '\n\nKeep studying to improve! 📚';
+                notificationType = 'warning';
+            }
+            
+            showNotification('Study Complete', message, notificationType, 6000);
+            
+            // Reset to home
+            setTimeout(() => {
+                resetToHome();
+            }, 2000);
+        }
+
+        function resetToHome() {
+            // First go to the home section
+            showSection('home');
+            
+            document.getElementById('subject-selection').classList.remove('hidden');
+            document.getElementById('topic-selection').classList.add('hidden');
+            document.getElementById('mode-selection-container').classList.add('hidden');
+            document.getElementById('question-section').classList.add('hidden');
+            document.getElementById('terms-section').classList.add('hidden');    
+            document.getElementById('progress-overview-container').classList.remove('hidden');    
+                    
+            
+            
+            // Clear selections
+            document.querySelectorAll('.subject-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            currentSubject = '';
+            selectedTopics = [];
+            
+            // Update analytics when returning home
+            updateHomeAnalytics();
+        }
+
+        // Terms Mode Functions
+        function showTerm() {
+            try {
+                if (currentQuestionIndex >= currentQuestions.length) {
+                    showNotification('Terms Complete', 'All terms completed! Great job studying!', 'success');
+                    setTimeout(() => {
+                        resetToHome();
+                    }, 2000);
+                    return;
+                }
+                
+                const term = currentQuestions[currentQuestionIndex];
+                if (!term || !term.term) {
+                    console.error('Invalid term data:', term);
+                    document.getElementById('term-text').textContent = 'Error: Term data not found';
+                    return;
+                }
+                
+                document.getElementById('term-text').textContent = term.term;
+                document.getElementById('definition-input').value = '';
+                document.getElementById('term-feedback').innerHTML = '';
+                document.getElementById('rating-buttons').classList.add('hidden');
+                document.getElementById('term-progress').textContent = 
+                    `${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+                
+                // Update term progress bar
+                updateTermProgressBar(term);
+            } catch (error) {
+                console.error('Error in showTerm:', error);
+                showNotification('Error', 'An error occurred when showing the term', 'error');
+            }
+        }
+        
+        function updateTermProgressBar(term) {
+            const progressBar = document.getElementById('term-progress-bar');
+            
+            // Check for existing rating in progress data
+            let rating = 'unseen';
+            if (progressData[currentSubject] && 
+                progressData[currentSubject][term.topic] && 
+                progressData[currentSubject][term.topic].terms && 
+                progressData[currentSubject][term.topic].terms.ratings) {
+                
+                rating = progressData[currentSubject][term.topic].terms.ratings[term.term] || 'unseen';
+            }
+            
+            // Set color and width based on rating
+            if (rating === 'easy') {
+                progressBar.style.backgroundColor = 'var(--success-color)';
+                progressBar.style.width = '100%';
+            } else if (rating === 'medium') {
+                progressBar.style.backgroundColor = 'var(--warning-color)';
+                progressBar.style.width = '66%';
+            } else if (rating === 'hard') {
+                progressBar.style.backgroundColor = '#f0ad4e'; // yellow
+                progressBar.style.width = '33%';
+            } else {
+                progressBar.style.backgroundColor = 'var(--error-color)';
+                progressBar.style.width = '0%';
+            }
+        }
+
+        function showDefinition() {
+            try {
+                const term = currentQuestions[currentQuestionIndex];
+                if (!term || !term.definition) {
+                    console.error('Invalid term data or missing definition:', term);
+                    document.getElementById('term-feedback').innerHTML = 
+                        '<div class="feedback incorrect"><i class="fas fa-exclamation-triangle"></i>Error: Definition not found</div>';
+                    return;
+                }
+                
+                const correctDefinition = term.definition;
+                const feedbackHTML = `<div class="feedback correct"><i class="fas fa-lightbulb"></i><strong>Correct Definition:</strong> ${correctDefinition}</div>`;
+                document.getElementById('term-feedback').innerHTML = feedbackHTML;
+                document.getElementById("rating-buttons").classList.remove("hidden");
+            } catch (error) {
+                console.error('Error in showDefinition:', error);
+                document.getElementById('term-feedback').innerHTML = 
+                    '<div class="feedback incorrect"><i class="fas fa-exclamation-triangle"></i>Error showing definition</div>';
+            }
+        }
+
+        function rateAnswer(rating) {
+            try {
+                const term = currentQuestions[currentQuestionIndex];
+                
+                // Initialize or update progress for this subject and topic
+                if (!progressData[currentSubject]) {
+                    progressData[currentSubject] = {};
+                }
+                if (!progressData[currentSubject][term.topic]) {
+                    progressData[currentSubject][term.topic] = {
+                        quiz: { correct: 0, total: 0, streak: 0, mastered: false, lastAttempt: null, questionStreaks: {} },
+                        terms: { ratings: {}, total: 0, mastered: false, lastAttempt: null },
+                        exam: { correct: 0, total: 0, streak: 0, mastered: false, lastAttempt: null }
+                    };
+                }
+                if (!progressData[currentSubject][term.topic].terms.ratings) {
+                    progressData[currentSubject][term.topic].terms.ratings = {};
+                }
+                
+                // Store the rating
+                progressData[currentSubject][term.topic].terms.ratings[term.term] = rating;
+                progressData[currentSubject][term.topic].terms.total = 
+                    Object.keys(progressData[currentSubject][term.topic].terms.ratings).length;
+                progressData[currentSubject][term.topic].terms.lastAttempt = Date.now();
+                
+                // Check for mastery (all terms rated as 'easy')
+                const ratings = Object.values(progressData[currentSubject][term.topic].terms.ratings);
+                const easyCount = ratings.filter(r => r === 'easy').length;
+                progressData[currentSubject][term.topic].terms.mastered = (easyCount === ratings.length && ratings.length > 0);
+                
+                // Update the progress bar
+                updateTermProgressBar(term);
+                
+                // Save and update analytics
+                saveProgress();
+                updateHomeAnalytics();
+                
+                // Show feedback based on rating
+                let feedbackHTML = '';
+                if (rating === 'easy') {
+                    feedbackHTML = '<div class="feedback correct"><i class="fas fa-check-circle"></i>Great! You know this term well.</div>';
+                } else if (rating === 'medium') {
+                    feedbackHTML = '<div class="feedback correct"><i class="fas fa-info-circle"></i>Good! Keep reviewing to master it.</div>';
+                } else {
+                    feedbackHTML = '<div class="feedback incorrect"><i class="fas fa-book"></i>Keep studying this term.</div>';
+                }
+                document.getElementById('term-feedback').innerHTML += feedbackHTML;
+                
+                // Automatically move to next term after a short delay
+                setTimeout(() => {
+                    nextTerm();
+                }, 1500);
+            } catch (error) {
+                console.error('Error in rateAnswer:', error);
+                showNotification('Error', 'An error occurred when rating the answer', 'error');
+            }
+        }
+
+        function previousTerm() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showTerm();
+            }
+        }
+
+        function nextTerm() {
+            currentQuestionIndex++;
+            showTerm();
+        }
+
+        // Reports Functions
+        function updateReportsDisplay() {
+            updateCharts();
+            updateMasteryDisplay();
+            updateOverallStats();
+        }
+
+        function updateCharts() {
+            const modes = ['quiz', 'terms', 'exam'];
+            const modeNames = ['Smart Quiz', 'Smart Terms', 'Smart Advance'];
+            
+            modes.forEach((mode, index) => {
+                const canvasId = mode === 'exam' ? 'advanceChart' : mode + 'Chart';
+                const ctx = document.getElementById(canvasId)?.getContext('2d');
+                
+                if (!ctx) return;
+                
+                // Destroy existing chart
+                if (charts[mode]) {
+                    charts[mode].destroy();
+                }
+                
+                // Calculate data
+                let mastered = 0, correct = 0, incorrect = 0, unanswered = 0;
+                
+                for (let subject in progressData) {
+                    for (let topic in progressData[subject]) {
+                        const topicData = progressData[subject][topic][mode];
+                        if (mode === 'terms') {
+                            const ratings = Object.values(topicData.ratings || {});
+                            mastered += ratings.filter(r => r === 'easy').length;
+                            correct += ratings.filter(r => r === 'medium').length;
+                            incorrect += ratings.filter(r => r === 'hard').length;
+                        } else {
+                            if (topicData.mastered) mastered++;
+                            else if (topicData.total > 0) {
+                                correct += topicData.correct;
+                                incorrect += topicData.total - topicData.correct;
+                            } else {
+                                unanswered++;
+                            }
+                        }
+                    }
+                }
+                
+                const data = mode === 'terms' 
+                    ? [mastered, correct, incorrect]
+                    : [mastered, correct, incorrect, unanswered];
+                    
+                const labels = mode === 'terms'
+                    ? ['Easy', 'Medium', 'Hard']
+                    : ['Mastered', 'Correct', 'Incorrect', 'Unanswered'];
+                    
+                const colors = mode === 'terms'
+                    ? ['#10b981', '#f59e0b', '#ef4444']
+                    : ['#10b981', '#6366f1', '#ef4444', '#94a3b8'];
+
+                charts[mode] = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors,
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 10,
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Update last attempt
+                const lastAttemptSpan = document.getElementById(mode === 'exam' ? 'advance-last-attempt' : mode + '-last-attempt');
+                if (lastAttemptSpan) {
+                    let lastAttempt = 0;
+                    for (let subject in progressData) {
+                        for (let topic in progressData[subject]) {
+                            const topicData = progressData[subject][topic][mode];
+                            if (topicData.lastAttempt && topicData.lastAttempt > lastAttempt) {
+                                lastAttempt = topicData.lastAttempt;
+                            }
+                        }
+                    }
+                    
+                    if (lastAttempt > 0) {
+                        const daysAgo = Math.floor((Date.now() - lastAttempt) / (1000 * 60 * 60 * 24));
+                        lastAttemptSpan.textContent = daysAgo === 0 ? 'Today' : daysAgo === 1 ? 'Yesterday' : `${daysAgo} days ago`;
+                    } else {
+                        lastAttemptSpan.textContent = 'Not started';
+                    }
+                }
+            });
+        }
+
+        function updateMasteryDisplay() {
+            const masteryGrid = document.getElementById('mastery-grid');
+            masteryGrid.innerHTML = '';
+            
+            for (let subject in progressData) {
+                for (let topic in progressData[subject]) {
+                    const topicData = progressData[subject][topic];
+                    
+                    for (let mode in topicData) {
+                        if (topicData[mode].total > 0 || Object.keys(topicData[mode].ratings || {}).length > 0) {
+                            const masteryCard = document.createElement('div');
+                            masteryCard.className = 'mastery-card';
+                            
+                            let percentage = 0;
+                            let statusText = 'In Progress';
+                            
+                            if (mode === 'terms') {
+                                const ratings = Object.values(topicData[mode].ratings || {});
+                                const goodRatings = ratings.filter(r => r === 'easy' || r === 'medium').length;
+                                percentage = ratings.length > 0 ? Math.round((goodRatings / ratings.length) * 100) : 0;
+                                if (topicData[mode].mastered) statusText = '✅ Mastered';
+                            } else {
+                                percentage = topicData[mode].total > 0 ? 
+                                    Math.round((topicData[mode].correct / topicData[mode].total) * 100) : 0;
+                                if (topicData[mode].mastered) statusText = '✅ Mastered';
+                            }
+                            
+                            const modeName = mode === 'quiz' ? 'Smart Quiz' : mode === 'terms' ? 'Smart Terms' : 'Smart Advance';
+                            const totalText = mode === 'terms' ? 
+                                Object.keys(topicData[mode].ratings || {}).length + ' rated' :
+                                topicData[mode].correct + '/' + topicData[mode].total;
+                            
+                            masteryCard.innerHTML = `
+                                <div class="mastery-header">
+                                    <div class="mastery-title">${subject} - ${topic}</div>
+                                    <div class="mastery-percentage">${percentage}%</div>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${percentage}%"></div>
+                                </div>
+                                <div class="mastery-stats">
+                                    <span>${modeName}</span>
+                                    <span>${totalText}</span>
+                                    <span>${statusText}</span>
+                                </div>
+                            `;
+                            
+                            masteryGrid.appendChild(masteryCard);
+                        }
+                    }
+                }
+            }
+            
+            if (masteryGrid.children.length === 0) {
+                masteryGrid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: 40px;">No progress data yet. Start studying to see your progress here!</div>';
+            }
+        }
+
+        function updateOverallStats() {
+            let totalQuestions = 0;
+            let totalCorrect = 0;
+            let masteredTopics = 0;
+            
+            for (let subject in progressData) {
+                for (let topic in progressData[subject]) {
+                    const topicData = progressData[subject][topic];
+                    
+                    // Count mastered topics
+                    if (topicData.quiz.mastered || topicData.terms.mastered || topicData.exam.mastered) {
+                        masteredTopics++;
+                    }
+                    
+                    // Count questions
+                    totalQuestions += topicData.quiz.total + topicData.exam.total + Object.keys(topicData.terms.ratings || {}).length;
+                    totalCorrect += topicData.quiz.correct + topicData.exam.correct;
+                    
+                    // Count good term ratings as correct
+                    const ratings = Object.values(topicData.terms.ratings || {});
+                    totalCorrect += ratings.filter(r => r === 'easy' || r === 'medium').length;
+                }
+            }
+            
+            const avgScore = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+            
+            document.getElementById('avg-score').textContent = avgScore + '%';
+            document.getElementById('total-questions').textContent = totalQuestions;
+            document.getElementById('topics-mastered').textContent = masteredTopics;
+            
+            // Calculate study streak (placeholder)
+            document.getElementById('study-streak').textContent = '3'; // This would be calculated based on daily activity
+        }
+
+        function showReport(reportType) {
+            showSection('reports');
+            
+            // You could add specific report filtering here
+            showNotification('Report Opened', `Viewing ${reportType} report`, 'info');
+        }
+
+        // Settings Functions
+        function toggleTheme() {
+            settings.darkMode = !settings.darkMode;
+            document.documentElement.setAttribute('data-theme', settings.darkMode ? 'dark' : 'light');
+            document.getElementById('theme-toggle').classList.toggle('active', settings.darkMode);
+            saveSettings();
+            
+            showNotification('Theme Changed', `Switched to ${settings.darkMode ? 'dark' : 'light'} mode`, 'success');
+        }
+
+        function toggleSetting(settingName) {
+            settings[settingName] = !settings[settingName];
+            const toggleId = settingName.replace(/([A-Z])/g, '-$1').toLowerCase() + '-toggle';
+            const toggleElement = document.getElementById(toggleId);
+            
+            if (toggleElement) {
+                toggleElement.classList.toggle('active', settings[settingName]);
+                saveSettings();
+                
+                const settingLabels = {
+                    autoProgress: 'Auto Progress',
+                    sounds: 'Sound Effects', 
+                    shuffle: 'Shuffle Questions',
+                    immediateReading: 'Immediate Feedback'
+                };
+                
+                showNotification('Setting Updated', `${settingLabels[settingName]} ${settings[settingName] ? 'enabled' : 'disabled'}`, 'info');
+            } else {
+                console.error(`Toggle element with ID ${toggleId} not found`);
+            }
+        }
+
+        // Data Management Functions
+        function exportData() {
+            const dataToExport = {
+                progress: progressData,
+                settings: settings,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(dataToExport, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `smart-revise-data-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showNotification('Data Exported', 'Your progress and settings have been exported', 'success');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (importedData.progress) {
+                        progressData = importedData.progress;
+                        saveProgress();
+                    }
+                    
+                    if (importedData.settings) {
+                        settings = importedData.settings;
+                        saveSettings();
+                        initializeSettings();
+                    }
+                    
+                    updateReportsDisplay();
+                    showNotification('Data Imported', 'Your data has been successfully imported', 'success');
+                    
+                } catch (error) {
+                    showNotification('Import Failed', 'Invalid file format or corrupted data', 'error');
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset file input
+            event.target.value = '';
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone!')) {
+                progressData = {};
+                initializeProgress();
+                updateReportsDisplay();
+                showNotification('Progress Reset', 'All progress data has been reset', 'warning');
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data including settings? This cannot be undone!')) {
+                localStorage.removeItem('smartReviseProgress');
+                localStorage.removeItem('smartReviseSettings');
+                
+                progressData = {};
+                settings = {
+                    darkMode: false,
+                    autoProgress: false,
+                    sounds: true,
+                    shuffle: true,
+                    immediateReading: true
+                };
+                
+                initializeProgress();
+                initializeSettings();
+                updateReportsDisplay();
+                
+                showNotification('All Data Cleared', 'All data and settings have been cleared', 'error');
+            }
+        }
+
+        function updateProgress(question, isCorrect) {
+            try {
+                const topic = question.topic;
+                if (!topic) {
+                    console.error('Question has no topic defined:', question);
+                    return;
+                }
+                
+                // Initialize progress data if needed
+                if (!progressData[currentSubject]) {
+                    progressData[currentSubject] = {};
+                }
+                if (!progressData[currentSubject][topic]) {
+                    progressData[currentSubject][topic] = {
+                        quiz: { correct: 0, total: 0, streak: 0, mastered: false, lastAttempt: null, questionStreaks: {} },
+                        terms: { ratings: {}, total: 0, mastered: false, lastAttempt: null },
+                        exam: { correct: 0, total: 0, streak: 0, mastered: false, lastAttempt: null }
+                    };
+                }
+                
+                // Ensure questionStreaks exists
+                if (!progressData[currentSubject][topic][currentMode].questionStreaks) {
+                    progressData[currentSubject][topic][currentMode].questionStreaks = {};
+                }
+                
+                const topicProgress = progressData[currentSubject][topic][currentMode];
+                topicProgress.total++;
+                topicProgress.lastAttempt = Date.now();
+                
+                // Track streak for the specific question
+                if (!topicProgress.questionStreaks[question.question]) {
+                    topicProgress.questionStreaks[question.question] = 0;
+                }
+                
+                if (isCorrect) {
+                    topicProgress.correct++;
+                    
+                    if (currentMode !== 'terms') {
+                        topicProgress.streak = (topicProgress.streak || 0) + 1;
+                        // Increment streak for this specific question
+                        topicProgress.questionStreaks[question.question]++;
+                        
+                        // Check for mastery (3 correct in a row for quiz/exam)
+                        if (topicProgress.streak >= 3) {
+                            topicProgress.mastered = true;
+                        }
+                    }
+                } else {
+                    if (currentMode !== 'terms') {
+                        topicProgress.streak = 0;
+                        // Reset streak for this specific question
+                        topicProgress.questionStreaks[question.question] = 0;
+                    }
+                }
+                
+                // Update the progress bar
+                if (currentMode === 'quiz') {
+                    updateProgressBar(topicProgress.questionStreaks[question.question]);
+                }
+                
+                saveProgress();
+                
+                // Update analytics
+                updateHomeAnalytics();
+            } catch (error) {
+                console.error('Error in updateProgress:', error);
+            }
+        }
+    </script>
+</body>
+</html>
+<script>
+// This function is no longer used since we've updated to use the marking scheme
+// It's kept for reference
+function markTypedAnswer() {
+    const answer = document.getElementById("typed-answer").value.trim();
+    const question = currentQuestions[currentQuestionIndex];
+    const feedbackContainer = document.getElementById("feedback-container");
+    let feedbackHTML = '';
+
+    if (answer.length > 10) {
+        correctAnswers++;
+        currentStreak++;
+        feedbackHTML = '<div class="feedback correct"><i class="fas fa-check-circle"></i>Answer accepted. Great job!</div>';
+        updateProgress(question.topic, true);
+    } else {
+        currentStreak = 0;
+        feedbackHTML = '<div class="feedback incorrect"><i class="fas fa-times-circle"></i>Answer too short. Try again.</div>';
+        updateProgress(question.topic, false);
+    }
+
+    feedbackContainer.innerHTML = feedbackHTML;
+    document.getElementById('streak-count').textContent = currentStreak;
+    document.getElementById('correct-count').textContent = correctAnswers;
+}
+
+// Fix for settings page
+document.addEventListener('DOMContentLoaded', function() {
+    // Add direct click handler for settings tab
+    document.getElementById('settings-tab').addEventListener('click', function() {
+        // Hide all other sections
+        document.getElementById('home-section').classList.add('hidden');
+        document.getElementById('subject-selection').classList.add('hidden');
+        document.getElementById('topic-selection').classList.add('hidden');
+        document.getElementById('mode-selection-container').classList.add('hidden');
+        document.getElementById('question-section').classList.add('hidden');
+        document.getElementById('terms-section').classList.add('hidden');
+        document.getElementById('reports-section').classList.add('hidden');
+        
+        // Update active tab
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.getElementById('settings-tab').classList.add('active');
+        
+        // Show settings section
+        document.getElementById('settings-section').classList.remove('hidden');
+    });
+    
+    // Fix settings toggles
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+    document.getElementById('auto-progress-toggle').addEventListener('click', function() {
+        toggleSetting('autoProgress');
+    });
+    document.getElementById('sound-toggle').addEventListener('click', function() {
+        toggleSetting('sounds');
+    });
+    document.getElementById('shuffle-toggle').addEventListener('click', function() {
+        toggleSetting('shuffle');
+    });
+    document.getElementById('feedback-toggle').addEventListener('click', function() {
+        toggleSetting('immediateReading');
+    });
+    
+    // Update settings display to match stored values
+    initializeSettings();
+});
+</script>
